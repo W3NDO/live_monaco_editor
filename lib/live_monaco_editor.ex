@@ -188,4 +188,14 @@ defmodule LiveMonacoEditor do
     to = Keyword.get(opts, :to, @default_path)
     push_event(socket, "lme:set_value:#{to}", %{"value" => value})
   end
+
+  @doc """
+  Update the model of the editor.
+  """
+
+  @spec update_model(Socket.t(), String.t(), keyword()) :: Socket.t()
+  def update_model(socket, value, opts \\ []) when is_binary(value) do
+    to = Keyword.get(opts, :to, @default_path)
+    push_event(socket, "lme:update_model:#{to}", %{"value" => value})
+  end
 end
