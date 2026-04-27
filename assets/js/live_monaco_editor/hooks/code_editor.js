@@ -69,8 +69,11 @@ const CodeEditorHook = {
         // this will apply the changes made by one use.
         // const { client_id, changes, version } = data
         console.log("This was called")
+        const user = data.user_id
         const changes = data.changes
         const version = data.version
+
+        if (user == this.el.dataset.userId) return
 
         const model = this.codeEditor.standalone_code_editor.getModel()
         if (!model || !changes || changes.length === 0) return
