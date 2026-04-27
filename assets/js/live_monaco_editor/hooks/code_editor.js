@@ -73,7 +73,7 @@ const CodeEditorHook = {
         const changes = data.changes
         const version = data.version
 
-        if (user == this.el.dataset.userId) return
+        if (user == this.el.dataset) return
 
         const model = this.codeEditor.standalone_code_editor.getModel()
         if (!model || !changes || changes.length === 0) return
