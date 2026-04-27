@@ -13,23 +13,42 @@ const CodeEditorHook = {
     )
 
     this.codeEditor.onMount((monaco) => {
-      if (this.el.dataset.changeEvent && this.el.dataset.changeEvent !== "") {
-        this.codeEditor.standalone_code_editor.onDidChangeModelContent(() => {
-          if (this.el.dataset.target && this.el.dataset.target !== "") {
-            this.pushEventTo(
-              this.el.dataset.target,
-              this.el.dataset.changeEvent,
-              {
-                value: this.codeEditor.standalone_code_editor.getValue(),
-              }
-            )
-          } else {
-            this.pushEvent(this.el.dataset.changeEvent, {
-              value: this.codeEditor.standalone_code_editor.getValue(),
-            })
-          }
-        })
-      }
+      // if (this.el.dataset.changeEvent && this.el.dataset.changeEvent !== "") {
+      //   this.codeEditor.standalone_code_editor.onDidChangeModelContent(
+      //     (event) => {
+      //       if (this.el.dataset.target && this.el.dataset.target !== "") {
+      //         this.pushEventTo(
+      //           this.el.dataset.target,
+      //           this.el.dataset.changeEvent,
+      //           {
+      //             // value: this.codeEditor.standalone_code_editor.getModel(),
+      //             value: event.changes,
+      //           }
+      //         )
+      //       } else {
+      //         this.pushEvent(this.el.dataset.changeEvent, {
+      //           // value: this.codeEditor.standalone_code_editor.getValue(),
+      //           value: event.changes,
+      //         })
+      //       }
+      //     }
+      //   )
+      // }
+
+      this.codeEditor.standalone_code_editor.onDidChangeModelContent(
+        (event) => {
+          if (this.suppress) return
+
+          this.pushEvent("lme:delta", {
+            model: {
+              client_id: this.el.dataset.client_id,
+              path: this.el.dataset.path,
+              version: event.versionId,
+              changes: event.changes,
+            },
+          })
+        }
+      )
 
       this.handleEvent(
         "lme:change_language:" + this.el.dataset.path,
@@ -52,6 +71,52 @@ const CodeEditorHook = {
         console.log(model)
         // this.pushEvent("send_model", {model: model})
       })
+
+      this.handleEvent("lme:applyEdits:" + this.el.dataset.path, (data) => {
+        // this will apply the changes made by one use.
+        const { client_id, changes, version } = data
+
+        if (client_id == this.clientId) return
+
+        const model = this.codeEditor.standalone_code_editor.getModel()
+        if (!model || !changes || changes.length === 0) return
+
+        const currentVersion = model.getVersionId()
+        if (version && version < currentVersion) {
+          console.warn("Stale update ignored", { version, currentVersion })
+          return
+        }
+
+        const operations = changes.map((c) => ({
+          range: new monaco.Range(
+            c.range.startLineNumber,
+            c.range.startColumn,
+            c.range.endLineNumber,
+            c.range.endColumn
+          ),
+          text: c.text,
+          forceMoveMarkers: true,
+        }))
+
+        this.supress = true
+
+        try {
+          model.pushEditOperations([], operations, () => null)
+        } finally {
+          this.supress = false
+        }
+      })
+
+      this.handleEvent("lme:getValue:" + this.el.dataset.path, (data) => {
+        // this will read the value of an editor.
+      })
+
+      this.handleEvent(
+        "lme:pushEditOperations:" + this.el.dataset.path,
+        (data) => {
+          // this sends updates to all other users.
+        }
+      )
 
       this.el.querySelectorAll("textarea").forEach((textarea) => {
         textarea.setAttribute(
