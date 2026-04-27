@@ -101,6 +101,7 @@ const CodeEditorHook = {
         this.supress = true
 
         try {
+          console.log("Attempting updates")
           model.pushEditOperations([], operations, () => null)
         } finally {
           this.supress = false
