@@ -186,7 +186,7 @@ defmodule LiveMonacoEditor do
   @spec set_value(Socket.t(), String.t(), keyword()) :: Socket.t()
   def set_value(socket, value, opts \\ []) when is_binary(value) do
     to = Keyword.get(opts, :to, @default_path)
-    push_event(socket, "lme:set_value:#{to}", %{"value" => value})
+    push_event(socket, "lme:delta:#{to}", %{"value" => value})
   end
 
   @doc """
