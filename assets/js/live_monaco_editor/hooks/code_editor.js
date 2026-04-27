@@ -16,6 +16,7 @@ const CodeEditorHook = {
       if (this.el.dataset.changeEvent && this.el.dataset.changeEvent !== "") {
         this.codeEditor.standalone_code_editor.onDidChangeModelContent(
           (event) => {
+            if (this.suppress) return
             if (this.el.dataset.target && this.el.dataset.target !== "") {
               this.pushEventTo(
                 this.el.dataset.target,
