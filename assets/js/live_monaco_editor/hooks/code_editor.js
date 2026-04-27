@@ -74,18 +74,17 @@ const CodeEditorHook = {
 
       this.handleEvent("lme:applyEdits:" + this.el.dataset.path, (data) => {
         // this will apply the changes made by one use.
-        const { client_id, changes, version } = data
-
-        if (client_id == this.clientId) return
+        // const { client_id, changes, version } = data
+        const changes = data.changes
 
         const model = this.codeEditor.standalone_code_editor.getModel()
         if (!model || !changes || changes.length === 0) return
 
-        const currentVersion = model.getVersionId()
-        if (version && version < currentVersion) {
-          console.warn("Stale update ignored", { version, currentVersion })
-          return
-        }
+        // const currentVersion = model.getVersionId()
+        // if (version && version < currentVersion) {
+        //   console.warn("Stale update ignored", { version, currentVersion })
+        //   return
+        // }
 
         const operations = changes.map((c) => ({
           range: new monaco.Range(
