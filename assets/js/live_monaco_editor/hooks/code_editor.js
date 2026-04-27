@@ -9,10 +9,10 @@ const CodeEditorHook = {
       this.el,
       this.el.dataset.path,
       this.el.dataset.value,
+      this.el.dataset.user_id,
       opts
     )
     this.suppress = false
-    this.userId = this.el.dataset.user_id
 
     this.codeEditor.onMount((monaco) => {
       if (this.el.dataset.changeEvent && this.el.dataset.changeEvent !== "") {

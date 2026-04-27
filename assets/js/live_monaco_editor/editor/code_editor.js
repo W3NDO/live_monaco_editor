@@ -6,10 +6,11 @@ import loader from "@monaco-editor/loader"
 import { theme } from "./themes"
 
 class CodeEditor {
-  constructor(el, path, value, opts) {
+  constructor(el, path, value, userId, opts) {
     this.el = el
     this.path = path
     this.value = value
+    this.userId = userId
     this.opts = opts
     // https://microsoft.github.io/monaco-editor/docs.html#interfaces/editor.IStandaloneCodeEditor.html
     this.standalone_code_editor = null

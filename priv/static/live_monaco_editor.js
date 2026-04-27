@@ -592,10 +592,11 @@ var LiveMonacoEditor = (() => {
 
   // js/live_monaco_editor/editor/code_editor.js
   var CodeEditor = class {
-    constructor(el, path, value, opts) {
+    constructor(el, path, value, userId, opts) {
       this.el = el;
       this.path = path;
       this.value = value;
+      this.userId = userId;
       this.opts = opts;
       this.standalone_code_editor = null;
       this._onMount = [];
@@ -695,10 +696,10 @@ var LiveMonacoEditor = (() => {
         this.el,
         this.el.dataset.path,
         this.el.dataset.value,
+        this.el.dataset.user_id,
         opts
       );
       this.suppress = false;
-      this.userId = this.el.dataset.user_id;
       this.codeEditor.onMount((monaco) => {
         if (this.el.dataset.changeEvent && this.el.dataset.changeEvent !== "") {
           this.codeEditor.standalone_code_editor.onDidChangeModelContent(
