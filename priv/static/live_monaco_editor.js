@@ -770,6 +770,7 @@ var LiveMonacoEditor = (() => {
           try {
             this.suppress = true;
             model.pushEditOperations([], operations, () => null);
+            this.suppress = false;
           } finally {
             this.supress = false;
           }
