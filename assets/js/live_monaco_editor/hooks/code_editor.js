@@ -74,15 +74,16 @@ const CodeEditorHook = {
         // const { client_id, changes, version } = data
         console.log("This was called")
         const changes = data.changes
+        const version = data.version
 
         const model = this.codeEditor.standalone_code_editor.getModel()
         if (!model || !changes || changes.length === 0) return
 
-        // const currentVersion = model.getVersionId()
-        // if (version && version < currentVersion) {
-        //   console.warn("Stale update ignored", { version, currentVersion })
-        //   return
-        // }
+        const currentVersion = model.getVersionId()
+        if (version && version < currentVersion) {
+          console.warn("Stale update ignored", { version, currentVersion })
+          return
+        }
         console.log("changes", changes)
         const operations = changes.map((c) => ({
           range: new monaco.Range(
