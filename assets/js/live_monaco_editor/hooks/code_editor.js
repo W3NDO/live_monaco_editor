@@ -21,8 +21,6 @@ const CodeEditorHook = {
                 this.el.dataset.target,
                 this.el.dataset.changeEvent,
                 {
-                  // value: this.codeEditor.standalone_code_editor.getModel(),
-                  // value: event.changes,
                   model: {
                     client_id: this.el.dataset.userId,
                     path: this.el.dataset.path,
@@ -33,8 +31,6 @@ const CodeEditorHook = {
               )
             } else {
               this.pushEvent(this.el.dataset.changeEvent, {
-                // value: this.codeEditor.standalone_code_editor.getValue(),
-                // value: event.changes,
                 model: {
                   client_id: this.el.dataset.userId,
                   path: this.el.dataset.path,
@@ -110,6 +106,7 @@ const CodeEditorHook = {
         "lme:pushEditOperations:" + this.el.dataset.path,
         (data) => {
           // this sends updates to all other users.
+          console.log(data, "pushEditOperations")
         }
       )
 
