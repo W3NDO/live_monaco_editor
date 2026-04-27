@@ -203,7 +203,7 @@ defmodule LiveMonacoEditor do
   Apply the changes as edits.
   """
   @spec apply_edits(Socket.t(), Map.t(), keyword()) :: Socket.t()
-  def apply_edits(socket, changes, opts \\ []) when is_map(changes) do
+  def apply_edits(socket, changes, opts \\ []) when is_list(changes) do
     to = Keyword.get(opts, :to, @default_path)
     push_event(socket, "lme:applyEdits:#{to}", changes)
   end
