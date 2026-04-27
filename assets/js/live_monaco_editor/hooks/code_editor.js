@@ -60,12 +60,9 @@ const CodeEditorHook = {
 
       this.handleEvent("lme:applyEdits:" + this.el.dataset.path, (data) => {
         // this will apply the changes made by one user to all other users.
-        console.log("This was called", this.el.dataset.path, "someting")
-        const user = data.user_id
+        console.log("This was called", Array.from(this.el.dataset), "someting")
         const changes = data.changes
         const version = data.version
-
-        // if (user == this.el.dataset) return
 
         const model = this.codeEditor.standalone_code_editor.getModel()
         if (!model || !changes || changes.length === 0) return
@@ -75,7 +72,6 @@ const CodeEditorHook = {
           console.warn("Stale update ignored", { version, currentVersion })
           return
         }
-        console.log("changes", changes)
         const operations = changes.map((c) => ({
           range: new monaco.Range(
             c.range.startLineNumber,
@@ -90,7 +86,6 @@ const CodeEditorHook = {
         this.supress = true
 
         try {
-          console.log("Attempting updates")
           model.pushEditOperations([], operations, () => null)
         } finally {
           this.supress = false

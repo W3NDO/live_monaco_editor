@@ -715,8 +715,7 @@ var CodeEditorHook = {
         this.codeEditor.standalone_code_editor.setValue(data.value);
       });
       this.handleEvent("lme:applyEdits:" + this.el.dataset.path, (data) => {
-        console.log("This was called", this.el.dataset.path, "someting");
-        const user = data.user_id;
+        console.log("This was called", Array.from(this.el.dataset), "someting");
         const changes = data.changes;
         const version = data.version;
         const model = this.codeEditor.standalone_code_editor.getModel();
@@ -726,7 +725,6 @@ var CodeEditorHook = {
           console.warn("Stale update ignored", { version, currentVersion });
           return;
         }
-        console.log("changes", changes);
         const operations = changes.map((c) => ({
           range: new monaco.Range(
             c.range.startLineNumber,
@@ -739,7 +737,6 @@ var CodeEditorHook = {
         }));
         this.supress = true;
         try {
-          console.log("Attempting updates");
           model.pushEditOperations([], operations, () => null);
         } finally {
           this.supress = false;
