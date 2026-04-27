@@ -11,6 +11,8 @@ const CodeEditorHook = {
       this.el.dataset.value,
       opts
     )
+    this.suppress = false
+    this.userId = this.el.dataset.user_id
 
     this.codeEditor.onMount((monaco) => {
       if (this.el.dataset.changeEvent && this.el.dataset.changeEvent !== "") {
@@ -19,6 +21,7 @@ const CodeEditorHook = {
             console.log("CHANGE EVENT", {
               suppress: this.suppress,
               changes: event.changes,
+              user_id: this.userId,
             })
             if (this.suppress) return
             if (this.el.dataset.target && this.el.dataset.target !== "") {
