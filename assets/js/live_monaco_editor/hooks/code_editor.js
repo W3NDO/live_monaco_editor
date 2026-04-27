@@ -39,7 +39,7 @@ const CodeEditorHook = {
         (event) => {
           if (this.suppress) return
 
-          this.pushEvent("lme:delta", {
+          this.pushEvent("lme:applyEdits", {
             model: {
               client_id: this.el.dataset.userId,
               path: this.el.dataset.path,
