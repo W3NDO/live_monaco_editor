@@ -592,7 +592,7 @@ var LiveMonacoEditor = (() => {
 
   // js/live_monaco_editor/editor/code_editor.js
   var CodeEditor = class {
-    constructor(el, path, value, userId, opts) {
+    constructor(el, path, value, opts) {
       this.el = el;
       this.path = path;
       this.value = value;

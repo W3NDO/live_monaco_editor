@@ -6,7 +6,7 @@ import loader from "@monaco-editor/loader"
 import { theme } from "./themes"
 
 class CodeEditor {
-  constructor(el, path, value, userId, opts) {
+  constructor(el, path, value, opts) {
     this.el = el
     this.path = path
     this.value = value
