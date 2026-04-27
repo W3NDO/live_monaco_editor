@@ -78,7 +78,7 @@ defmodule LiveMonacoEditor do
       "Event name to capture editor content changes. See [Inside Forms](#module-inside-forms) for more info."
 
   attr :user_id, :string,
-    deault: "",
+    default: "",
     doc:
       "User ID for collaborative editing. "
 
