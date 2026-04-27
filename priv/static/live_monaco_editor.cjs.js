@@ -731,7 +731,6 @@ var CodeEditorHook = {
         "lme:change_language:" + this.el.dataset.path,
         (data) => {
           const model = this.codeEditor.standalone_code_editor.getModel();
-          console.log("MODEL: ", model);
           if (model.getLanguageId() !== data.mimeTypeOrLanguageId) {
             monaco.editor.setModelLanguage(model, data.mimeTypeOrLanguageId);
           }
@@ -740,16 +739,11 @@ var CodeEditorHook = {
       this.handleEvent("lme:set_value:" + this.el.dataset.path, (data) => {
         this.codeEditor.standalone_code_editor.setValue(data.value);
       });
-      this.handleEvent("lme:update_model" + this.el.dataset.path, (data) => {
-        const model = this.codeEditor.standalone_code_editor.getModel();
-        console.log(model);
-      });
       this.handleEvent("lme:applyEdits:" + this.el.dataset.path, (data) => {
-        console.log("This was called", this.el, "someting");
+        console.log("This was called", this.el.dataset.path, "someting");
         const user = data.user_id;
         const changes = data.changes;
         const version = data.version;
-        if (user == this.el.dataset) return;
         const model = this.codeEditor.standalone_code_editor.getModel();
         if (!model || !changes || changes.length === 0) return;
         const currentVersion = model.getVersionId();
