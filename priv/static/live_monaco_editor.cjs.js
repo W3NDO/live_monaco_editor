@@ -770,9 +770,10 @@ var CodeEditorHook = {
         try {
           this.suppress = true;
           model.pushEditOperations([], operations, () => null);
-          this.suppress = false;
         } finally {
-          this.supress = false;
+          setTimeout(() => {
+            this.suppress = false;
+          });
         }
       });
       this.handleEvent(
