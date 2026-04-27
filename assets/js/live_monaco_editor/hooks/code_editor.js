@@ -47,21 +47,6 @@ const CodeEditorHook = {
         )
       }
 
-      // this.codeEditor.standalone_code_editor.onDidChangeModelContent(
-      //   (event) => {
-      //     if (this.suppress) return
-
-      //     this.pushEventTo("lme:delta", {
-      //       model: {
-      //         client_id: this.el.dataset.userId,
-      //         path: this.el.dataset.path,
-      //         version: event.versionId,
-      //         changes: event.changes,
-      //       },
-      //     })
-      //   }
-      // )
-
       this.handleEvent(
         "lme:change_language:" + this.el.dataset.path,
         (data) => {
@@ -87,7 +72,7 @@ const CodeEditorHook = {
       this.handleEvent("lme:applyEdits:" + this.el.dataset.path, (data) => {
         // this will apply the changes made by one use.
         // const { client_id, changes, version } = data
-        console.log("THis was called")
+        console.log("This was called")
         const changes = data.changes
 
         const model = this.codeEditor.standalone_code_editor.getModel()
@@ -98,7 +83,7 @@ const CodeEditorHook = {
         //   console.warn("Stale update ignored", { version, currentVersion })
         //   return
         // }
-        console.log(changes)
+        console.log("changes", changes)
         const operations = changes.map((c) => ({
           range: new monaco.Range(
             c.range.startLineNumber,
@@ -118,10 +103,6 @@ const CodeEditorHook = {
         } finally {
           this.supress = false
         }
-      })
-
-      this.handleEvent("lme:getValue:" + this.el.dataset.path, (data) => {
-        // this will read the value of an editor.
       })
 
       this.handleEvent(
