@@ -745,7 +745,7 @@ var LiveMonacoEditor = (() => {
           console.log(model);
         });
         this.handleEvent("lme:applyEdits:" + this.el.dataset.path, (data) => {
-          console.log("This was called", this.el.dataset.userId, "someting");
+          console.log("This was called", this.el.dataset, "someting");
           const user = data.user_id;
           const changes = data.changes;
           const version = data.version;
