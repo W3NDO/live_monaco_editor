@@ -13,42 +13,54 @@ const CodeEditorHook = {
     )
 
     this.codeEditor.onMount((monaco) => {
-      // if (this.el.dataset.changeEvent && this.el.dataset.changeEvent !== "") {
-      //   this.codeEditor.standalone_code_editor.onDidChangeModelContent(
-      //     (event) => {
-      //       if (this.el.dataset.target && this.el.dataset.target !== "") {
-      //         this.pushEventTo(
-      //           this.el.dataset.target,
-      //           this.el.dataset.changeEvent,
-      //           {
-      //             // value: this.codeEditor.standalone_code_editor.getModel(),
-      //             value: event.changes,
-      //           }
-      //         )
-      //       } else {
-      //         this.pushEvent(this.el.dataset.changeEvent, {
-      //           // value: this.codeEditor.standalone_code_editor.getValue(),
-      //           value: event.changes,
-      //         })
-      //       }
-      //     }
-      //   )
-      // }
+      if (this.el.dataset.changeEvent && this.el.dataset.changeEvent !== "") {
+        this.codeEditor.standalone_code_editor.onDidChangeModelContent(
+          (event) => {
+            if (this.el.dataset.target && this.el.dataset.target !== "") {
+              this.pushEventTo(
+                this.el.dataset.target,
+                this.el.dataset.changeEvent,
+                {
+                  // value: this.codeEditor.standalone_code_editor.getModel(),
+                  // value: event.changes,
+                  model: {
+                    client_id: this.el.dataset.userId,
+                    path: this.el.dataset.path,
+                    version: event.versionId,
+                    changes: event.changes,
+                  },
+                }
+              )
+            } else {
+              this.pushEvent(this.el.dataset.changeEvent, {
+                // value: this.codeEditor.standalone_code_editor.getValue(),
+                // value: event.changes,
+                model: {
+                  client_id: this.el.dataset.userId,
+                  path: this.el.dataset.path,
+                  version: event.versionId,
+                  changes: event.changes,
+                },
+              })
+            }
+          }
+        )
+      }
 
-      this.codeEditor.standalone_code_editor.onDidChangeModelContent(
-        (event) => {
-          if (this.suppress) return
+      // this.codeEditor.standalone_code_editor.onDidChangeModelContent(
+      //   (event) => {
+      //     if (this.suppress) return
 
-          this.pushEvent("lme:delta", {
-            model: {
-              client_id: this.el.dataset.userId,
-              path: this.el.dataset.path,
-              version: event.versionId,
-              changes: event.changes,
-            },
-          })
-        }
-      )
+      //     this.pushEventTo("lme:delta", {
+      //       model: {
+      //         client_id: this.el.dataset.userId,
+      //         path: this.el.dataset.path,
+      //         version: event.versionId,
+      //         changes: event.changes,
+      //       },
+      //     })
+      //   }
+      // )
 
       this.handleEvent(
         "lme:change_language:" + this.el.dataset.path,
