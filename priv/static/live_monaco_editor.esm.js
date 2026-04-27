@@ -571,7 +571,6 @@ var CodeEditor = class {
     this.el = el;
     this.path = path;
     this.value = value;
-    this.userId = userId;
     this.opts = opts;
     this.standalone_code_editor = null;
     this._onMount = [];
@@ -671,7 +670,6 @@ var CodeEditorHook = {
       this.el,
       this.el.dataset.path,
       this.el.dataset.value,
-      this.el.dataset.user_id,
       opts
     );
     this.suppress = false;
@@ -681,8 +679,7 @@ var CodeEditorHook = {
           (event) => {
             console.log("CHANGE EVENT", {
               suppress: this.suppress,
-              changes: event.changes,
-              user_id: this.userId
+              changes: event.changes
             });
             if (this.suppress) return;
             if (this.el.dataset.target && this.el.dataset.target !== "") {
@@ -746,6 +743,7 @@ var CodeEditorHook = {
         }));
         this.supress = true;
         try {
+          this.suppress = true;
           model.pushEditOperations([], operations, () => null);
         } finally {
           this.supress = false;

@@ -9,7 +9,6 @@ const CodeEditorHook = {
       this.el,
       this.el.dataset.path,
       this.el.dataset.value,
-      this.el.dataset.user_id,
       opts
     )
     this.suppress = false
@@ -21,7 +20,6 @@ const CodeEditorHook = {
             console.log("CHANGE EVENT", {
               suppress: this.suppress,
               changes: event.changes,
-              user_id: this.userId,
             })
             if (this.suppress) return
             if (this.el.dataset.target && this.el.dataset.target !== "") {
@@ -94,6 +92,7 @@ const CodeEditorHook = {
         this.supress = true
 
         try {
+          this.suppress = true
           model.pushEditOperations([], operations, () => null)
         } finally {
           this.supress = false

@@ -10,7 +10,6 @@ class CodeEditor {
     this.el = el
     this.path = path
     this.value = value
-    this.userId = userId
     this.opts = opts
     // https://microsoft.github.io/monaco-editor/docs.html#interfaces/editor.IStandaloneCodeEditor.html
     this.standalone_code_editor = null
