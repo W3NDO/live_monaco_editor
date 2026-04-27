@@ -41,7 +41,7 @@ const CodeEditorHook = {
 
           this.pushEvent("lme:delta", {
             model: {
-              client_id: this.el.dataset.client_id,
+              client_id: this.el.dataset.userId,
               path: this.el.dataset.path,
               version: event.versionId,
               changes: event.changes,

@@ -701,9 +701,9 @@ var LiveMonacoEditor = (() => {
         this.codeEditor.standalone_code_editor.onDidChangeModelContent(
           (event) => {
             if (this.suppress) return;
-            this.pushEvent("lme:delta2", {
+            this.pushEvent("lme:delta", {
               model: {
-                client_id: this.clientId,
+                client_id: this.el.dataset.userId,
                 path: this.el.dataset.path,
                 version: event.versionId,
                 changes: event.changes

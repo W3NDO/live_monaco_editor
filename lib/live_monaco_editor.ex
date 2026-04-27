@@ -198,4 +198,13 @@ defmodule LiveMonacoEditor do
     to = Keyword.get(opts, :to, @default_path)
     push_event(socket, "lme:update_model:#{to}", %{"value" => value})
   end
+
+  @doc """
+  Apply the changes as edits.
+  """
+  @spec apply_edits(Socket.t(), Map.t(), keyword()) :: Socket.t()
+  def apply_edits(socket, changes, opts \\ []) when is_map(changes) do
+    to = Keyword.get(opts, :to, @default_path)
+    push_event(socket, "lme:applyEdits:#{to}", changes)
+  end
 end
