@@ -68,7 +68,7 @@ const CodeEditorHook = {
       this.handleEvent("lme:applyEdits:" + this.el.dataset.path, (data) => {
         // this will apply the changes made by one use.
         // const { client_id, changes, version } = data
-        console.log("This was called")
+        console.log("This was called", this.el.dataset.userId, "someting")
         const user = data.user_id
         const changes = data.changes
         const version = data.version
