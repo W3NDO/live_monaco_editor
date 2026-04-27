@@ -195,6 +195,11 @@ defmodule LiveMonacoEditor do
   @spec apply_edits(Socket.t(), Map.t(), keyword()) :: Socket.t()
   def apply_edits(socket, changes_delta, opts \\ []) when is_map(changes_delta) do
     to = Keyword.get(opts, :to, @default_path)
-    push_event(socket, "lme:applyEdits:#{to}", %{"changes" => changes_delta["changes"], "version" => changes_delta["version"], "user" => changes_delta["user_id"]})
+    case changes_delta["changer_user_id"] == changes_delta["current_user_id"] do
+      true -> {:noreply, socket}
+      _ -> push_event(socket, "lme:applyEdits:#{to}", %{
+        "changes" => changes_delta["changes"],
+        "version" => changes_delta["version"] })
+    end
   end
 end
